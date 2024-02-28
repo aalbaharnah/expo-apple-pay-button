@@ -4,7 +4,11 @@ A React Native library for integrating native Apple Pay button views (PKPaymentB
 ### Installation
 ```bash
 npm install expo-apple-pay-button
-```
+```..
+### XCode Configuration
+You'll need to add Apple Pay capability from xcode
+![image](https://github.com/aalbaharnah/expo-apple-pay-button/assets/11477123/d20833ef-27a8-4919-b828-574598cb2431)
+
 
 ### Usage
 Import the `ApplePayButton` component from the library:
