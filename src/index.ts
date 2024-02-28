@@ -11,3 +11,7 @@ export * from './ExpoApplePayButton.types';
 export async function startPaymentAsync(options: PaymentOptions) {
   return ExpoApplePayButtonModule.startPaymentAsync(options);
 }
+
+export async function canMakePaymentsAsync(): Promise<boolean> {
+  return ExpoApplePayButtonModule.canMakePaymentsAsync();
+}

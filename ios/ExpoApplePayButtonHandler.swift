@@ -29,7 +29,10 @@ class ExpoApplePayButtonHandler: NSObject, PKPaymentAuthorizationControllerDeleg
     var paymentDataJson: [String:Any]?
     var completionHandler: PaymentCompletionHandler!
     var presentViewController : UIViewController?
-    
+
+    func canMakePayments() -> Bool {
+        return PKPaymentAuthorizationController.canMakePayments()
+    }
     
     func startPayment(items:[PKPaymentSummaryItem], merchantIdentifier: String,  completion: @escaping PaymentCompletionHandler){
         self.completionHandler = completion;
@@ -72,10 +75,8 @@ class ExpoApplePayButtonHandler: NSObject, PKPaymentAuthorizationControllerDeleg
     func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {
         controller.dismiss(completion: {
             DispatchQueue.main.async {
-                if self.paymentStatus == .success {
+                if self.paymentStatus == PKPaymentAuthorizationStatus.success {
                     self.completionHandler!(true, self.paymentDataJson)
-                } else {
-                    self.completionHandler!(false, nil)
                 }
             }
         })

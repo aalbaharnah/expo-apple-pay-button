@@ -13,6 +13,10 @@ public class ExpoApplePayButtonModule: Module {
       
       Name("ExpoApplePayButton")
 
+      AsyncFunction("canMakePaymentsAsync") { (promise: Promise) in
+          promise.resolve(PKPaymentAuthorizationViewController.canMakePayments())
+      }.runOnQueue(.main)
+
       AsyncFunction("startPaymentAsync") { (options: PaymentOptions, promise: Promise) in
           if(!PKPaymentAuthorizationViewController.canMakePayments()){
               print("Apple Pay is not supported on this device")
@@ -39,15 +43,15 @@ public class ExpoApplePayButtonModule: Module {
           paymenthandler.startPayment(
             items: paymentSumaryItems,
             merchantIdentifier: options.merchantId,
-             completion: { (success, data) in
-                  if(success){
-                      promise.resolve(data)
-                  } else {
-                      promise.reject("400", "Payment failed")
-                  }
-              } );
-          
-          
+            completion: { (success, data) in
+                if(success){
+                    promise.resolve(data)
+                } else {
+                    promise.reject("400", "Payment failed")
+                }
+            } 
+        );
+        
       }.runOnQueue(.main)
 
       View(ApplePayButtonView.self) {}
