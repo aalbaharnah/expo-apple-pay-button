@@ -61,8 +61,8 @@ class ExpoApplePayButtonHandler: NSObject, PKPaymentAuthorizationControllerDeleg
         didAuthorizePayment payment: PKPayment,
         handler completion: @escaping (PKPaymentAuthorizationResult) -> Void
     ) {
-      self.paymentStatus = PKPaymentAuthorizationStatus.success
       do {
+          self.paymentStatus = PKPaymentAuthorizationStatus.success
           if let json = try JSONSerialization.jsonObject(with: payment.token.paymentData, options: []) as? [String: Any]{
               self.paymentDataJson = json
               completion(PKPaymentAuthorizationResult(status: PKPaymentAuthorizationStatus.success, errors: [Error]()))
@@ -75,8 +75,30 @@ class ExpoApplePayButtonHandler: NSObject, PKPaymentAuthorizationControllerDeleg
     func paymentAuthorizationControllerDidFinish(_ controller: PKPaymentAuthorizationController) {
         controller.dismiss(completion: {
             DispatchQueue.main.async {
-                if self.paymentStatus == PKPaymentAuthorizationStatus.success {
-                    self.completionHandler!(true, self.paymentDataJson)
+                switch self.paymentStatus {
+                    case .success:
+                        self.completionHandler!(true, self.paymentDataJson);
+                        break;
+                    case .failure:
+                        self.completionHandler!(false, ["Error": "FAILURE"])
+                        break;
+                    case .invalidBillingPostalAddress:
+                        self.completionHandler!(false, ["Error": "INVALID_BILLING_POSTAL_ADDRESS"]);
+                        break;
+                    case .invalidShippingContact:
+                        self.completionHandler!(false, ["Error": "INVALID_SHIPPING_CONTACT"]);
+                        break;
+                    case .pinIncorrect:
+                        self.completionHandler!(false, ["Error": "PIN_INCORRECT"]);
+                        break;
+                    case .pinLockout:
+                        self.completionHandler!(false, ["Error": "PIN_LOCKOUT"]);
+                        break;
+                    case .pinRequired:
+                        self.completionHandler!(false, ["Error": "PIN_REQUIRED"]);
+                        break;
+                    default:
+                        self.completionHandler!(false, ["Error": "UNKNOWN"])  
                 }
             }
         })

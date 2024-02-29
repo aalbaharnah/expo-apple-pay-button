@@ -47,7 +47,7 @@ public class ExpoApplePayButtonModule: Module {
                 if(success){
                     promise.resolve(data)
                 } else {
-                    promise.reject("400", "Payment failed")
+                    promise.reject("400", data?["Error"] as! String)
                 }
             } 
         );
