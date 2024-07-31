@@ -54,7 +54,11 @@ export default function App() {
     <View style={styles.container}>
       <Text>{`can make payment?`} {canMakePayments ? 'yes' : 'no'}</Text>
       <TouchableOpacity onPress={onPress}>
-        <ExpoApplePayButton.ApplePayButton style={styles.btn} />
+        <ExpoApplePayButton.ApplePayButton
+          style={styles.btn}
+          buttonStyle="black"
+          buttonLabel="plain"
+        />
       </TouchableOpacity>
     </View>
   );
@@ -71,6 +75,7 @@ const styles = StyleSheet.create({
     margin: 12,
     height: 45,
     width: 500,
-    borderRadius: 12
+    maxWidth: '90%',
+    borderRadius: 12,
   }
 });

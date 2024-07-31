@@ -8,3 +8,6 @@ export type PaymentOptions = {
   merchantId: string;
   items: PaymentSummaryItem[];
 }
+
+export type ApplePayButtonStyle = 'white' | 'whiteOutline' | 'black';
+export type ApplePayButtonType = 'plain' | 'buy' | 'setUp' | 'inStore' | 'donate';

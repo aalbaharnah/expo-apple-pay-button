@@ -26,11 +26,11 @@ public class ExpoApplePayButtonModule: Module {
           
           paymenthandler = ExpoApplePayButtonHandler()
           
-          var paymentSumaryItems = [PKPaymentSummaryItem]()
+          var paymentSummaryItems = [PKPaymentSummaryItem]()
           for item in options.items {
               let label = item["label"] as! String
               let amount = item["amount"] as! String
-              paymentSumaryItems.append(PKPaymentSummaryItem(label: label, amount: NSDecimalNumber(string: amount), type: .final))
+              paymentSummaryItems.append(PKPaymentSummaryItem(label: label, amount: NSDecimalNumber(string: amount), type: .final))
           }
 
           let total = options.items.reduce(0.0) { (result, item) -> Double in
@@ -38,10 +38,10 @@ public class ExpoApplePayButtonModule: Module {
               return result + Double(amount)!
           }
 
-          paymentSumaryItems.append(PKPaymentSummaryItem(label: options.merchantName , amount: NSDecimalNumber(string: String(total)), type: .final))
+          paymentSummaryItems.append(PKPaymentSummaryItem(label: options.merchantName , amount: NSDecimalNumber(string: String(total)), type: .final))
 
           paymenthandler.startPayment(
-            items: paymentSumaryItems,
+            items: paymentSummaryItems,
             merchantIdentifier: options.merchantId,
             completion: { (success, data) in
                 if(success){
@@ -54,6 +54,14 @@ public class ExpoApplePayButtonModule: Module {
         
       }.runOnQueue(.main)
 
-      View(ApplePayButtonView.self) {}
+      View(ApplePayButtonView.self) {
+          Prop("buttonStyle") { (view, buttonStyle: String) in
+            view.applePayButton.setButtonTypeAndStyle("", buttonStyle)
+          }
+          
+          Prop("buttonLabel") { (view, buttonLabel: String) in
+            view.applePayButton.setButtonTypeAndStyle(buttonLabel, "")
+          }
+      }
   }
 }

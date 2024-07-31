@@ -20,7 +20,7 @@ javascript
 Copy code
 <ApplePayButton
   buttonStyle="black"
-  buttonType="plain"
+  buttonLabel="plain"
   onPress={() => {
     // Handle Apple Pay button press event
   }}
@@ -28,8 +28,8 @@ Copy code
 ```
 
 ### Props
-- **buttonStyle (string):** The style of the Apple Pay button. Possible values are `"white"` or `"black"`.
-- **buttonType (string)**: The type of the Apple Pay button. Possible values are `"plain"`, "buy", `"setUp"`, or `"inStore"`.
+- **buttonStyle (string):** The style of the Apple Pay button. Possible values are `"white"`, `"black"` or `"outline"`.
+- **buttonLabel (string)**: The type of the Apple Pay button. Possible values are `"plain"`, `"buy"`, `"setUp"`, or `"inStore"`.
 - **onPress (function):** Callback function called when the Apple Pay button is pressed.
 
 ### Example
@@ -43,7 +43,7 @@ export default function App() {
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <ApplePayButton
         buttonStyle="black"
-        buttonType="plain"
+        buttonLabel="plain"
         onPress={() => {
           // Handle Apple Pay button press event
         }}
