@@ -21,8 +21,32 @@ Copy code
 <ApplePayButton
   buttonStyle="black"
   buttonLabel="plain"
-  onPress={() => {
+  onPress={async () => {
     // Handle Apple Pay button press event
+    try {
+      const items: ExpoApplePayButton.PaymentSummaryItem[] = [
+        {
+          label: 'Item 1',
+          amount: "10.00",
+        },
+        {
+          label: 'Item 2',
+          amount: "20.00",
+        }
+      ]
+
+      const payment = await ExpoApplePayButton.startPaymentAsync({
+        merchantName: "My Store", // this is the name that will appear on the payment sheet
+        merchantId: "merchant.com.merchantId", // this is the merchant id you have to create on the apple developer portal
+        items,
+      });
+      
+      if (!payment) {
+        Alert.alert('Payment Failed');
+      }
+    } catch (error) {
+      Alert.alert('Payment Failed', error.message);
+    }
   }}
 />
 ```
@@ -39,13 +63,45 @@ import { View } from 'react-native';
 import { ApplePayButton } from 'react-native-expo-apple-pay-button';
 
 export default function App() {
+
+    const onPress = async () => {
+    try {
+      const items: ExpoApplePayButton.PaymentSummaryItem[] = [
+        {
+          label: 'Item 1',
+          amount: "10.00",
+        },
+        {
+          label: 'Item 2',
+          amount: "20.00",
+        }
+      ]
+
+      const payment = await ExpoApplePayButton.startPaymentAsync({
+        merchantName: "My Store", // this is the name that will appear on the payment sheet
+        merchantId: "merchant.com.merchantId", // this is the merchant id you have to create on the apple developer portal
+        items,
+      });
+      
+      if (!payment) {
+        Alert.alert('Payment Failed');
+      }
+    } catch (error) {
+      Alert.alert('Payment Failed', error.message);
+    }
+  }
+
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <ApplePayButton
         buttonStyle="black"
         buttonLabel="plain"
-        onPress={() => {
-          // Handle Apple Pay button press event
+        onPress={onPress}
+        style={{
+          margin: 12,
+          height: 45,
+          width: 500,
+          maxWidth: '90%',
         }}
       />
     </View>
