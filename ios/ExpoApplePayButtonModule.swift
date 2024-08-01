@@ -23,6 +23,12 @@ public class ExpoApplePayButtonModule: Module {
               promise.reject("400", "Apple Pay is not supported on this device");
               return;
           }
+
+          // check if options have merchantName, merchantId, and items
+          if(options.merchantName.isEmpty || options.merchantId.isEmpty || options.items.isEmpty){
+              promise.reject("400", "Merchant Name, Merchant Id, and Items are required");
+              return;
+          }
           
           paymenthandler = ExpoApplePayButtonHandler()
           

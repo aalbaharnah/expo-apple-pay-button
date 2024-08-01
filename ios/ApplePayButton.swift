@@ -18,13 +18,9 @@ class ApplePayButton: UIView {
     init() {
         super.init(frame: CGRect.zero)
         self.button = PKPaymentButton(paymentButtonType: self.paymentButtonType, paymentButtonStyle: self.paymentButtonStyle)
-        self.button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         self.addSubview(self.button)
     }
     
-    @objc func buttonTapped() {
-        print("button tapped")
-    }
 
     @objc func setButtonTypeAndStyle(_ type: String, _ style: String) {
         // remove the button from the view
@@ -121,7 +117,6 @@ class ApplePayButton: UIView {
         }
 
         self.button = PKPaymentButton(paymentButtonType: self.paymentButtonType, paymentButtonStyle: self.paymentButtonStyle)
-        self.button.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
         self.addSubview(self.button)
     }
     
