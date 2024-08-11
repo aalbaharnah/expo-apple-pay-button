@@ -8,12 +8,21 @@ class ExpoApplePayButtonModule : Module() {
   override fun definition() = ModuleDefinition {
     Name("ExpoApplePayButton")
 
-    AsyncFunction("startPaymentAsync") { items: String?, promise: Promise ->
+    AsyncFunction("canMakePaymentsAsync") { _: String?, promise: Promise ->
       try {
-        promise.resolve("ok");
+        promise.resolve(false)
       } catch (e: Exception) {
-        promise.resolve("ok");
+        promise.resolve(false)
       }
     }
+
+    AsyncFunction("startPaymentAsync") { _: String?, promise: Promise ->
+      try {
+        promise.resolve("ok")
+      } catch (e: Exception) {
+        promise.resolve("ok")
+      }
+    }
+
   }
 }

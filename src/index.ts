@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import { PaymentOptions } from './ExpoApplePayButton.types';
 import ExpoApplePayButtonModule from './ExpoApplePayButtonModule';
 
@@ -13,5 +14,8 @@ export async function startPaymentAsync(options: PaymentOptions) {
 }
 
 export async function canMakePaymentsAsync(): Promise<boolean> {
+  if (Platform.OS !== 'ios') {
+    return Promise.resolve(false);
+  }
   return ExpoApplePayButtonModule.canMakePaymentsAsync();
 }
