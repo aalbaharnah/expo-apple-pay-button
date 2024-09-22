@@ -16,9 +16,5 @@ interface Props extends ViewProps {
 
 export default function ExpoApplePayButtonView({ onPress, ...props }: Props) {
   if (Platform.OS !== 'ios') return <View {...props} />
-  return (
-    <Pressable onPress={onPress}>
-      <NativeView {...props} />
-    </Pressable>
-  )
+  return <NativeView {...props} />;
 }
